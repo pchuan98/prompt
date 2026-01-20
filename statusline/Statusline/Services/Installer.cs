@@ -1,5 +1,7 @@
+using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Statusline.Extensions;
 
 namespace Statusline.Services;
 
@@ -10,12 +12,17 @@ public static class Installer
         var exePath = (Environment.ProcessPath ?? Path.GetFullPath(Environment.GetCommandLineArgs()[0]))
             .Replace('\\', '/');
 
-        Console.WriteLine("StatusLine Installation\n");
-        Console.WriteLine($"Executable: {exePath}\n");
-        Console.WriteLine("Select installation scope:");
-        Console.WriteLine("  [0] Global  (~/.claude/settings.json)");
-        Console.WriteLine("  [1] Current directory (./.claude/settings.json)");
-        Console.Write("\nChoice [0]: ");
+        "StatusLine Installation\n".Fg(Color.Cyan).WriteLine();
+        "Executable: ".Fg(Color.Gray).Write();
+        $"{exePath}\n".Fg(Color.White).WriteLine();
+
+        "Select installation scope:".Fg(Color.Yellow).WriteLine();
+        "  [0] ".Fg(Color.Green).Write();
+        "Global  (~/.claude/settings.json)".Fg(Color.White).Opacity(0.8).WriteLine();
+        "  [1] ".Fg(Color.Green).Write();
+        "Current directory (./.claude/settings.json)".Fg(Color.White).Opacity(0.8).WriteLine();
+
+        "\nChoice [0]: ".Fg(Color.Yellow).Write();
 
         var input = Console.ReadLine()?.Trim();
         var choice = string.IsNullOrEmpty(input) ? 0 : int.TryParse(input, out var n) ? n : -1;
@@ -29,17 +36,19 @@ public static class Installer
 
         if (targetFile == null)
         {
-            Console.WriteLine("Invalid choice.");
+            "Invalid choice.".Fg(Color.Red).WriteLine();
             return;
         }
 
         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
 
-        var settings = File.Exists(targetFile)
+        var exists = File.Exists(targetFile);
+        var settings = exists
             ? JsonNode.Parse(await File.ReadAllTextAsync(targetFile))?.AsObject() ?? []
             : [];
 
-        Console.WriteLine(File.Exists(targetFile) ? "Updating existing settings.json..." : "Creating new settings.json...");
+        (exists ? "Updating existing settings.json..." : "Creating new settings.json...")
+            .Fg(Color.Gray).WriteLine();
 
         settings["statusLine"] = new JsonObject
         {
@@ -49,7 +58,9 @@ public static class Installer
         };
 
         await File.WriteAllTextAsync(targetFile, settings.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
-        Console.WriteLine($"\nDone! Configured at: {targetFile}");
+
+        "\nDone! ".Fg(Color.Green).Write();
+        $"Configured at: {targetFile}".Fg(Color.White).Opacity(0.8).WriteLine();
     }
 
     private static string GetGlobalSettingsPath()

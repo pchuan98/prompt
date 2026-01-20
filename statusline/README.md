@@ -3,7 +3,7 @@
 ## Todos
 
 - [x] `StatusLine --install` Install status bar configuration
-- [ ] `StatusLine --demo` Preview
+- [x] `StatusLine --demo` Preview
 - [ ] Provide working directory information: current folder/Git working folder/Sln folder/Rust folder
 - [ ] Provide git branch and other information
 - [ ] Provide remaining context of the current model (progress bar/used context/token cost)

@@ -1,3 +1,5 @@
+using System.Drawing;
+using Statusline.Extensions;
 using Statusline.Services;
 
 if (args.Length == 0)
@@ -12,13 +14,13 @@ switch (args[0].ToLower())
         await Installer.RunAsync();
         break;
     case "--demo" or "-d":
-        Demo();
+        await Demo.RunAsync();
         break;
     case "--help" or "-h":
         ShowHelp();
         break;
     default:
-        Console.WriteLine($"Unknown option: {args[0]}");
+        $"Unknown option: {args[0]}".Fg(Color.Red).WriteLine();
         ShowHelp();
         break;
 }
@@ -28,25 +30,22 @@ return;
 void RunStatusLine()
 {
     // TODO: Implement statusline output
-    Console.WriteLine("StatusLine running...");
-}
-
-void Demo()
-{
-    // TODO: Implement demo preview
-    Console.WriteLine("Demo mode");
+    "StatusLine running...".Fg(Color.Gray).WriteLine();
 }
 
 void ShowHelp()
 {
-    Console.WriteLine("""
-        StatusLine - Claude Code Status Line Plugin
+    "StatusLine".Fg(Color.Cyan).Write();
+    " - Claude Code Status Line Plugin\n".Fg(Color.White).Opacity(0.7).WriteLine();
 
-        Usage: StatusLine [options]
+    "Usage: ".Fg(Color.Yellow).Write();
+    "StatusLine [options]\n".Fg(Color.White).Opacity(0.7).WriteLine();
 
-        Options:
-          --install, -i    Install statusline configuration
-          --demo, -d       Preview statusline output
-          --help, -h       Show this help message
-        """);
+    "Options:".Fg(Color.Yellow).WriteLine();
+    "  --install, -i    ".Fg(Color.Green).Write();
+    "Install statusline configuration".Fg(Color.White).Opacity(0.7).WriteLine();
+    "  --demo, -d       ".Fg(Color.Green).Write();
+    "Preview statusline output".Fg(Color.White).Opacity(0.7).WriteLine();
+    "  --help, -h       ".Fg(Color.Green).Write();
+    "Show this help message".Fg(Color.White).Opacity(0.7).WriteLine();
 }

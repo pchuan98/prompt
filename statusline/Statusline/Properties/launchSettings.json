@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Statusline": {
+      "commandName": "Project",
+      "commandLineArgs": "--demo",
+      "nativeDebugging": true,
+      "remoteDebugEnabled": false
+    }
+  }
+}
