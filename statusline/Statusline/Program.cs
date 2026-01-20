@@ -1,10 +1,14 @@
 using System.Drawing;
+using Statusline;
+using Statusline.Components;
 using Statusline.Extensions;
 using Statusline.Services;
 
 if (args.Length == 0)
 {
-    RunStatusLine();
+    StatusLine.Create()
+        .AddProject()
+        .Render();
     return;
 }
 
@@ -26,12 +30,6 @@ switch (args[0].ToLower())
 }
 
 return;
-
-void RunStatusLine()
-{
-    // TODO: Implement statusline output
-    "StatusLine running...".Fg(Color.Gray).WriteLine();
-}
 
 void ShowHelp()
 {

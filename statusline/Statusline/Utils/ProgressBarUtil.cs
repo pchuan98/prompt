@@ -35,8 +35,8 @@ public static class ProgressBarUtil
 
     // Preset color maps
     public static Color Green2Red(double d)
-        => Color.FromArgb(255, (int)(255 * d), (int)(255 * (1 - d)), 0);
+        => Color.FromArgb(255, 160, 255 - (int)(250 * d), 0);
 
     public static Color Red(double d)
-        => Color.FromArgb(255, (int)(200 * d) + 55, 20, 20);
+        => Color.FromArgb(255, (int)(200 * d) + 50, 10, 10);
 }
