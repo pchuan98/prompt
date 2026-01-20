@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/_/">
+    <File Path=".claude/settings.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Statusline/Statusline.csproj" Id="d877da3e-92c8-471b-b10d-62a875cac700" />
+</Solution>
